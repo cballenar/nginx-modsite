@@ -59,7 +59,7 @@ ngx_enable_site() {
 	[[ -e "$NGINX_SITES_ENABLED/$SELECTED_SITE" ]] &&
 		ngx_error "Site appears to already be enabled"
 
-	ln -sf "$NGINX_SITES_AVAILABLE/$SELECTED_SITE" -T "$NGINX_SITES_ENABLED/$SELECTED_SITE"
+	ln -sf "$NGINX_SITES_AVAILABLE/$SELECTED_SITE" "$NGINX_SITES_ENABLED/$SELECTED_SITE"
 	ngx_reload
 }
 
@@ -128,7 +128,7 @@ ngx_sites() {
 
 ngx_reload() {
 	read -p "Would you like to reload the Nginx configuration now? (Y/n) " reload
-	[[ "$reload" != "n" && "$reload" != "N" ]] && invoke-rc.d nginx reload
+    [[ "$reload" != "n" && "$reload" != "N" ]] && sudo launchctl unload /Library/LaunchDaemons/homebrew.mxcl.nginx.plist && sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
 }
 
 ngx_error() {
