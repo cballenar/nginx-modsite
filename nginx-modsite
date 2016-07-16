@@ -2,7 +2,7 @@
 
 ##
 #  File:
-#    nginx_modsite
+#    nginx-modsite
 #  Description:
 #    Provides a basic script to automate enabling and disabling websites found
 #    in the default configuration directories:
@@ -13,7 +13,7 @@
 #    help dialog displaying all options.
 ##
 
-# Copyright (C) 2010 Michael Lustfield <mtecknology@ubuntu.com>
+# Copyright (C) 2010 Michael Lustfield <mtecknology@ubuntu.com>, 2016 Andrew Salkeld (ajsalkeld) <andrew@ajsalkeld.com>
 
 # Redistribution and use in source and binary forms, with or without
 # modification, are permitted provided that the following conditions
@@ -54,7 +54,7 @@ ngx_enable_site() {
 	[[ ! "$SELECTED_SITE" ]] &&
 		ngx_select_site "not_enabled"
 
-	[[ ! -e "$NGINX_SITES_AVAILABLE/$SELECTED_SITE" ]] && 
+	[[ ! -e "$NGINX_SITES_AVAILABLE/$SELECTED_SITE" ]] &&
 		ngx_error "Site does not appear to exist."
 	[[ -e "$NGINX_SITES_ENABLED/$SELECTED_SITE" ]] &&
 		ngx_error "Site appears to already be enabled"
@@ -128,7 +128,11 @@ ngx_sites() {
 
 ngx_reload() {
 	read -p "Would you like to reload the Nginx configuration now? (Y/n) " reload
-    [[ "$reload" != "n" && "$reload" != "N" ]] && sudo launchctl unload /Library/LaunchDaemons/homebrew.mxcl.nginx.plist && sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
+    [[ "$reload" != "n" && "$reload" != "N" ]] && sudo service nginx reload
+}
+
+ngx_reload_now() {
+	sudo service nginx reload
 }
 
 ngx_error() {
@@ -156,8 +160,8 @@ ngx_help() {
 case "$1" in
 	-e|--enable)	ngx_enable_site;;
 	-d|--disable)	ngx_disable_site;;
+	-r|--reload) ngx_reload_now;;
 	-l|--list)	ngx_list_site;;
 	-h|--help)	ngx_help;;
 	*)		ngx_error "No Options Selected" 1; ngx_help;;
 esac
-
