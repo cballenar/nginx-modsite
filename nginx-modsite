@@ -2,7 +2,7 @@
 
 ##
 #  File:
-#    nginx-modsite
+#    nginx-modsite: Homebrew version!
 #  Description:
 #    Provides a basic script to automate enabling and disabling websites found
 #    in the default configuration directories:
@@ -128,11 +128,11 @@ ngx_sites() {
 
 ngx_reload() {
 	read -p "Would you like to reload the Nginx configuration now? (Y/n) " reload
-    [[ "$reload" != "n" && "$reload" != "N" ]] && invoke-rc.d nginx reload
+    [[ "$reload" != "n" && "$reload" != "N" ]] && sudo launchctl unload /Library/LaunchDaemons/homebrew.mxcl.nginx.plist && sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
 }
 
 ngx_reload_now() {
-	invoke-rc.d nginx reload
+	sudo launchctl unload /Library/LaunchDaemons/homebrew.mxcl.nginx.plist && sudo launchctl load /Library/LaunchDaemons/homebrew.mxcl.nginx.plist
 }
 
 ngx_error() {
