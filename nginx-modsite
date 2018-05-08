@@ -156,6 +156,7 @@ ngx_help() {
 	echo "Options:"
 	echo -e "\t<-e|--enable> <site>\tEnable site"
 	echo -e "\t<-d|--disable> <site>\tDisable site"
+	echo -e "\t<-x|--edit>\t\tEdit site"
 	echo -e "\t<-l|--list>\t\tList sites"
 	echo -e "\t<-h|--help>\t\tDisplay help"
 	echo -e "\n\tIf <site> is left out a selection of options will be presented."
